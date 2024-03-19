@@ -1,0 +1,555 @@
+---
+title: "2024 Sammy Baseball Roadmap"
+author: "Jonathan Starr"
+date: '`r paste("First created on Mar 15, 2024. Updated on", Sys.Date())`'
+output:
+  html_document:
+    highlight: tango
+    self_contained: yes
+    theme: journal
+    toc: true
+    toc_depth: 4
+    df_print: paged
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+params:
+  current_season: 2024
+  num_teams: 12
+  league_name: "sammyfbl"
+  keepers_final: TRUE
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Packages and Functions
+
+```{r libraries, message = FALSE, warning = FALSE}
+library(starrbaseball)
+library(cbsapi)
+library(tidyverse)
+library(baseballstarR)
+library(gt)
+library(ggplot2)
+library(bbplot)
+library(forcats)
+library(trelliscopejs)
+
+# 538 GT Theme taken from https://themockup.blog/static/gt-cookbook-advanced.html#FiveThirtyEight_Theme
+gt_theme_538 <- function(data,...) {
+  data %>%
+    opt_all_caps()  %>%
+    opt_table_font(
+      font = list(
+        google_font("Chivo"),
+        default_fonts()
+      )
+    ) %>%
+    fmt_percent(columns = contains("pct"), decimals = 0) %>% 
+    tab_style(
+      style = cell_borders(
+        sides = "bottom", color = "transparent", weight = px(2)
+      ),
+      locations = cells_body(
+        columns = everything(),
+        # This is a relatively sneaky way of changing the bottom border
+        # Regardless of data size
+        rows = nrow(data$`_data`)
+      )
+    )  %>% 
+    tab_options(
+      column_labels.background.color = "white",
+      table.border.top.width = px(3),
+      table.border.top.color = "transparent",
+      table.border.bottom.color = "transparent",
+      table.border.bottom.width = px(3),
+      column_labels.border.top.width = px(3),
+      column_labels.border.top.color = "transparent",
+      column_labels.border.bottom.width = px(3),
+      column_labels.border.bottom.color = "black",
+      data_row.padding = px(3),
+      source_notes.font.size = 12,
+      table.font.size = 16,
+      heading.align = "left",
+      ...
+    ) 
+}
+
+
+```
+
+# Inputs to be used in the analysis
+
+```{r inputs}
+# Most inputs are now stored in params
+# get player table for Names and ID's
+# mlb_players <- historical_player_table_w_prospects
+
+previous_season <- 2023
+```
+
+# Saved files
+
+```{r}
+data_raw_dir <- here::here("data-raw")
+fs::dir_ls(data_raw_dir)
+
+data_files_dir <- here::here("data")
+fs::dir_ls(data_files_dir)
+```
+
+# Data Acquisition
+
+This section outlines the data sources we are using in this analysis.
+
+The data sources are:
+
+-   CBS API
+-   Fangraphs
+-   NFBC
+
+## CBS Data
+
+The CBS current season data gets archived before the upcoming season starts. After it gets archived, it is gone forever. Some of the historical data is available via the API. In a lot of cases, it's necessary to run the current season data for this analysis since it isn't available as part of the historical data in the API until archived. That can sometimes be as late as March.
+
+Here's a breakdown of the data:
+
+**Run before archived** (Bolded results need to be run since they disappear once the league gets archived by CBS)
+
+-   **Auction Results that include bidding history**
+-   Transaction History for FAAB
+-   **Player Ranks (including ranks by scoring period)**
+-   **League Stats by Team**
+-   **Team Stats by Player**
+
+**Available as part of Historical Data after Archive**
+
+-   League Standings
+-   League Transactions
+
+My process is as follows:
+
+1.  Save Raw JSON Files from previous season before it gets archived
+2.  Wrangle Files and save clean files
+
+The reason behind saving raw JSON files, is in order to store a copy that has the original data, just in case I wrangle the data and mess anything up, or only save specific columns, and want access to the other columns. The Raw files most likely won't be used in the future.
+
+**Process**
+
+In order to get things like draft results, stats, and player ranks, the CBS script needs to be run prior to CBS archives the recently completed season. I didn't run it early enough, so the JSON returns are all `NULL` and I only have access to the Historical Data API endpoints.
+
+### Teams
+
+```{r}
+league_name <- params$league_name
+cbs_teams <- cbsapi::cbs_teams(league_id = "sammyfbl")
+```
+
+### Players
+
+My `baseballstarR` package also has a function below that gets the API result and returns the player table
+
+```{r}
+
+cbs_players <- cbsapi::cbs_player_search()
+
+```
+
+### Rosters Post Auction
+
+There are two components to the data we need for the rosters post-auction:
+
+1.  Historical Draft Results
+2.  Keepers heading into the Auction
+
+The Draft Results do not include the keepers, so we need to manually load keepers by either using Rotolab rosters that were saved, the keepers data if it is still stored in CBS API, or find whether we saved a post-auction file to extract the keepers.
+
+Keepers are still in API in this case.
+
+#### Keepers
+
+##### Historical Seasons
+
+For documentation of the process to come up with the historical list, look at the 2021 Preseason roadmap file. Manually copy the \`
+
+```{r}
+if (file.exists(here::here("data", glue::glue("keepers_2014-{params$current_season - 1}({params$league_name}).rds"))) == T){
+  prior_keepers <- readRDS(here::here("data", glue::glue("keepers_2014-{params$current_season - 1}({params$league_name}).rds")))
+  
+} else {
+
+print(glue::glue("You need to manually copy and paste the keepers_2014-{params$current_season - 1}({params$league_name}).rds file from the previous seasons data folder"))
+
+}
+
+
+```
+
+Change column naming to new naming convention
+
+```{r}
+prior_keepers <- prior_keepers |> 
+  select(
+    season = yearSeason,
+    draft_type = typeTransaction,
+    cbs_id = idPlayerCBS,
+    cbs_player_name = namePlayerCBS,
+    cbs_team_name = nameTeamCBS,
+    primary_position = slugPositionCBS,
+    salary = salaryPlayer,
+    contract_year = contractPlayer
+  )
+```
+
+##### Current Season Keepers (2024)
+
+Save raw JSON file of keepers from the CBS API just in case we want to use at some other point. If we already have it, skip to next part.
+
+```{r}
+if (params$keepers_final == TRUE) {
+  if (file.exists(here::here("data-raw", "cbs-json", glue::glue("{params$current_season}_keepers({params$league_name}).json"))) == T) {
+    print("Keepers JSON file exists.  No need to save again")
+  } else {
+    keepers <- baseballstarR:::cbs_keepers_endpoint(league_name = params$league_name)
+
+    if (nrow(keepers$body$keepers > 2)) {
+      print("Keepers Data Exists in API.  Saving file to data-raw folder")
+
+      # Save Raw JSON Output
+      jsonlite::write_json(keepers, here::here("data-raw", "cbs-json", glue::glue("{params$current_season}_keepers({params$league_name}).json")))
+    } else {
+      print("Look through Rotolab records for Keepers Data")
+    }
+  }
+}
+
+```
+
+Then, get the keepers for the current season using `baseballstarR`
+
+```{r}
+if (file.exists(here::here("data", glue::glue("{params$current_season}_keepers({params$league_name}).rds"))) == F) {
+keepers <- cbsapi::cbs_keepers(league_id = params$league_name, season = params$current_season)
+
+# manually remove players who were dropped post keeper deadline but pre-auction
+keepers <- keepers |> 
+  filter(!cbs_player_name %in% c("Jasson Dominguez", "Kyle Bradish", "Devin Williams")) |> 
+  select(-cbs_team_id)
+
+saveRDS(keepers, here::here("data", glue::glue("{params$current_season}_keepers({params$league_name}).rds")))
+
+} else {
+  keepers <- readRDS(here::here("data", glue::glue("{params$current_season}_keepers({params$league_name}).rds")))
+}
+                           
+                         
+
+```
+
+##### All Keepers
+
+Bind the {params\$current_season} keepers to the historical keepers and save. Otherwise, load them from .rds.
+
+```{r}
+if (file.exists(here::here("data", glue::glue("keepers_2014-{params$current_season}({league_name}).rds"))) == T){
+  keepers <- readRDS(here::here("data", glue::glue("keepers_2014-{params$current_season}({league_name}).rds")))
+  
+} else {
+
+keepers <- bind_rows(keepers, prior_keepers)
+
+# Fix OF Position
+keepers <- keepers %>% 
+  mutate(primary_position = ifelse(primary_position %in% c("LF", "CF", "RF"), "OF", primary_position))
+
+min_year <- min(keepers$season)
+max_year <- max(keepers$season)
+
+saveRDS(keepers, here::here("data", glue::glue("keepers_{min_year}-{max_year}({league_name}).rds")))
+}
+
+
+```
+
+#### Historical Auction Results
+
+```{r}
+
+auction_results <- cbsapi::cbs_historical_draft_results(league_id = "sammyfbl", timeframe = "all")
+```
+
+#### Historical Rosters
+
+The Historical Rosters is a combination of Historical Auction Results, and the Keepers work above.
+
+```{r}
+historical_rosters <- bind_rows(keepers, auction_results)
+
+rm(auction_results)
+rm(keepers)
+```
+
+Here are the old owners:
+
+```{r}
+historical_teams <- cbsapi::cbs_historical_teams() |> 
+  mutate(row = dplyr::row_number()) |> 
+  dplyr::group_by(season, cbs_team_name) |>
+  dplyr::filter(row == min(row)) |>
+  dplyr::ungroup()
+
+```
+
+```{r}
+historical_rosters |> 
+  mutate(above_40 = ifelse(salary >=40, 1,0),
+         above_30 = ifelse(salary >= 30, 1, 0)) |> 
+  group_by(season,cbs_team_name) |> 
+  summarize(max = max(salary), above_30 = sum(above_30), above_40 = sum(above_40)) |> 
+  arrange(cbs_team_name, desc(season)) 
+```
+
+# Historical Auction Analysis
+
+## Hitter- Pitcher Split
+
+The league used to be around a 59/41 split. It has consistent been trending updwards these last few years, culminating with the highest split ever towards batting last year. We will price with a 61% batting split this year.
+
+```{r league spending, echo= FALSE}
+# overall league spending summarized for last 5 years
+league_spending <- historical_rosters %>%
+  filter(season > (previous_season - 5) & season != params$current_season) %>%
+  group_by(season) %>%
+  summarize(
+    spending_total = sum(salary),
+    batting_total = sum(ifelse(!primary_position %in% c("SP", "RP"), salary, 0)),
+    pitching_total = spending_total - batting_total,
+    batting_pct = batting_total / spending_total,
+    pitching_pct = pitching_total / spending_total,
+    batting_avg = batting_total / params$num_teams,
+    pitching_avg = pitching_total / params$num_teams
+  ) %>%
+  ungroup() %>%
+  select(season, batting_pct, pitching_pct)
+
+# gt table showing batting, pitching splits for last 5 years
+league_spending %>% 
+  gt(rowname_col = "season") %>% 
+  tab_header(
+    title = "Historical Hitter-Pitcher Auction Split"
+  ) %>% 
+  cols_label(
+    batting_pct = "Hitting %",
+    pitching_pct = "Pitching %"
+  ) |> 
+  grand_summary_rows(
+    columns = matches("_pct"),
+    fns = list(
+      average = "mean"
+    ),
+    formatter = fmt_percent,
+    decimals = 0
+  ) |> 
+  fmt_percent(columns = matches("_pct"), decimals = 0)
+```
+
+### Owner Spending
+
+Now, let's take a look at the batting split spent by team for the last five years. As you can see, there is nothing meaninful to be gleaned here. Every owner is pretty unpredictable each year. Some teams like the Buzz, and Furbies almost never spend less than 60% on Batting.
+
+```{r owner spending, echo= FALSE}
+# spending by owner for the last 5 years
+owner_spending <- historical_rosters %>%
+  filter(season > (previous_season - 5) & season != params$current_season) |> 
+  group_by(season, cbs_team_name) %>%
+  summarize(
+    spending_total = sum(salary),
+    batting_total = sum(ifelse(!primary_position %in% c("SP", "RP"), salary, 0)),
+    pitching_total = spending_total - batting_total,
+    batting_pct = batting_total / spending_total
+  ) |> 
+  ungroup() |> 
+  filter(!cbs_team_name %in% c("New York Jedi", "Evanston Snowy Egrets", "Blackstone Valley Voodoo")) 
+
+owner_spending %>%
+  select(season, cbs_team_name, batting_pct) |> 
+  pivot_wider(names_from = season, values_from = batting_pct) |> 
+  gt() |> 
+  tab_header(
+    title = "Historical Owner Batting Spending"
+  ) %>%
+  fmt_percent(columns = matches("^2"), decimals = 0)
+```
+
+# Projections
+
+## Fangraphs Projections
+
+## Batting Projections
+```{r}
+bat_proj <- fg_projections(projection_source = c("atc", "thebat", "thebatx", "fangraphsdc", "steamer", "zips",
+    "zipsdc"),
+    stats_type = "bat",
+    season_type = "pre")
+
+# use in the event we want to simply adjust for AB/PA differences.  See page 14 of "The Process" by Tanner Bell & Jeff Zimmerman
+bat_proj_rate <- bat_proj |> 
+  select(projection_source, 
+         fangraphs_id,
+         player_name,
+         Team,
+         G,
+         PA,
+         AB,
+         H,
+         BB,
+         HBP,
+         SF,
+         R,
+         HR,
+         RBI,
+         SB,
+         OBP) |> 
+  mutate(PA_G = PA / G,
+         across(c(AB, H, R, HR, RBI, SB), ~ (.x / PA), .names = "{.col}_PA")
+         ) |> 
+  select(projection_source, player_name, G, PA_G, ends_with("_PA"))
+
+bat_proj_short <- bat_proj |> 
+  select(projection_source, 
+         fangraphs_id,
+         player_name,
+         Team,
+         G,
+         PA,
+         AB,
+         R,
+         HR,
+         RBI,
+         SB,
+         OBP)
+
+```
+
+## Pitching Projections
+
+```{r}
+pitch_proj <- fg_projections(projection_source = c("atc", "thebat", "fangraphsdc", "steamer", "zips",
+    "zipsdc"),
+    stats_type = "pit",
+    season_type = "pre")
+
+pitch_proj_short <- pitch_proj |> 
+  mutate(SOLDS = SV + HLD) |> 
+  select(projection_source, 
+         fangraphs_id,
+         player_name,
+         Team,
+         IP,
+         W,
+         SOLDS,
+         SO,
+         ERA,
+         WHIP)
+```
+
+# Valuations and Rankings
+
+```{r}
+
+bat_auction_calc <- fg_auction_calculator(teams = 12,
+  budget = 270,
+  stats_type = "bat",
+  projection_source = c("atc", "thebat", "thebatx", "fangraphsdc", "steamer"),
+  bat_split = 61,
+  rest_of_season = FALSE
+)
+
+bat_prior_ytd <- fg_auction_calculator(teams = 12,
+  budget = 270,
+  stats_type = "bat",
+  projection_source = c("2023", "2022", "2021"),
+  bat_split = 61,
+  rest_of_season = FALSE
+) |> 
+  select(projection_source, playerid, player_name, dollars) |> 
+  pivot_wider(names_from = projection_source,
+              values_from = dollars) |> 
+  janitor::clean_names()
+
+bat_auction_calc_summary <- fg_auction_calculator_summary(bat_auction_calc) |> 
+  left_join(bat_prior_ytd)
+
+bat_proj_capsule <- bat_proj_short |> 
+  left_join(bat_auction_calc |> select(projection_source,
+                                       fangraphs_id = playerid,
+                                       ADP,
+                                       dollars)) |> 
+  relocate(ADP, .before = PA) |> 
+  group_by(projection_source) |> 
+  mutate(dollars_rank = rank(-dollars),
+         adp_rank = rank(ADP),
+         diff = adp_rank - dollars_rank) |> 
+  ungroup()
+```
+
+Let's compare a few player values at different batter pitcher splits since our league split increased so much last year.
+
+```{r}
+bat_calc_64 <- fg_auction_calculator(teams = 12,
+  budget = 270,
+  stats_type = "bat",
+  projection_source = "steamer",
+  bat_split = 64,
+  rest_of_season = FALSE
+)
+
+bat_calc_compare_join <- bat_auction_calc |> 
+  select(projection_source, player_name, team, pos, ADP, PA, dollars_61 = dollars) |> 
+  left_join(bat_calc_64 |> select(player_name, dollars_64 = dollars), join_by(player_name)) |> 
+  mutate(rank = rank(-dollars_61),
+         dollar_diff = dollars_64 - dollars_61)
+
+bat_calc_compare_join |> 
+  filter(rank %in% c(1, 25, 50, 100)) |> 
+  gt()
+```
+
+As you can see, the top players get pushed up a few dollars, and the lower ranked players have roughly the same value. **Takeaway: Be willing to deviate from values a few dollars if needed. Especially at the top of the draft board.**
+
+<!-- ## Projections Data -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+<!-- See who has the highest SD of WRC+ with minimum of 400 PA. -->
+
+<!-- ```{r} -->
+
+<!-- bat_proj |>  -->
+
+<!--   group_by(player_name) |>  -->
+
+<!--   filter(all(PA >= 400) & projection_source %in% c("ZiPS", "Steamer","THE BAT")) |>  -->
+
+<!--   summarize(SD = sd(`wRC+`)) |>  -->
+
+<!--   arrange(desc(SD)) |>  -->
+
+<!--   View() -->
+
+<!-- ``` -->
+
+## Eno Sarris Pitching Ranks
+
+Taken from: <https://theathletic.com/3136219/2022/03/18/sarris-starting-pitching-ranks-for-the-2022-fantasy-season>
+
+-   Manually copy the table
