@@ -1606,7 +1606,7 @@ display: none;
 <h1 class="title toc-ignore">2024 Sammy Baseball Roadmap</h1>
 <h4 class="author">Jonathan Starr</h4>
 <h4 class="date">First created on Mar 15, 2024. Updated on
-2024-03-18</h4>
+2024-03-19</h4>
 
 </div>
 
@@ -1740,13 +1740,13 @@ endpoints.</p>
 <h3>Teams</h3>
 <pre><code>## Assigning CBS Access Token to cbs_token on your environment
 ## Data from: &lt;https://api.cbssports.com/general/oauth/mobile/login?response_format=json&amp;user_id=jstarr82&amp;password=qouM%40o7v&amp;client_id=cbssports&amp;client_secret=sportsallthetime&gt;
-## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/league/teams?version=3.0&amp;access_token=U2FsdGVkX19T4PTeF6zY3dkU6uWgqr8vwaHfbqGKKFGlWRl-SKxGqmJHTzbv3ocZeYUEUCJS82B5VygPO44FAHRVgZYuZ47aXDUWKeKun6c&amp;response_format=JSON&amp;league_id=sammyfbl&amp;SPORT=baseball&gt;</code></pre>
+## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/league/teams?version=3.0&amp;access_token=U2FsdGVkX1_Wp1EjlnKjkv2hkMVupneewlVqCFFq9its0sFly4-uTrQTOh2Ydd_DOpb5MscyKIuqCYaz-YaC6Hz5tcRYGiDcEnJtTipajDQ&amp;response_format=JSON&amp;league_id=sammyfbl&amp;SPORT=baseball&gt;</code></pre>
 </div>
 <div id="players" class="section level3">
 <h3>Players</h3>
 <p>My <code>baseballstarR</code> package also has a function below that
 gets the API result and returns the player table</p>
-<pre><code>## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/players/search?version=3.0&amp;access_token=U2FsdGVkX19T4PTeF6zY3dkU6uWgqr8vwaHfbqGKKFGlWRl-SKxGqmJHTzbv3ocZeYUEUCJS82B5VygPO44FAHRVgZYuZ47aXDUWKeKun6c&amp;response_format=JSON&amp;league_id=sammyfbl&gt;</code></pre>
+<pre><code>## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/players/search?version=3.0&amp;access_token=U2FsdGVkX1_Wp1EjlnKjkv2hkMVupneewlVqCFFq9its0sFly4-uTrQTOh2Ydd_DOpb5MscyKIuqCYaz-YaC6Hz5tcRYGiDcEnJtTipajDQ&amp;response_format=JSON&amp;league_id=sammyfbl&gt;</code></pre>
 </div>
 <div id="rosters-post-auction" class="section level3">
 <h3>Rosters Post Auction</h3>
@@ -1786,14 +1786,14 @@ and save. Otherwise, load them from .rds.</p>
 </div>
 <div id="historical-auction-results" class="section level4">
 <h4>Historical Auction Results</h4>
-<pre><code>## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/league/history/draft-results?version=3.0&amp;access_token=U2FsdGVkX19T4PTeF6zY3dkU6uWgqr8vwaHfbqGKKFGlWRl-SKxGqmJHTzbv3ocZeYUEUCJS82B5VygPO44FAHRVgZYuZ47aXDUWKeKun6c&amp;response_format=JSON&amp;league_id=sammyfbl&amp;timeframe=all&gt;</code></pre>
+<pre><code>## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/league/history/draft-results?version=3.0&amp;access_token=U2FsdGVkX1_Wp1EjlnKjkv2hkMVupneewlVqCFFq9its0sFly4-uTrQTOh2Ydd_DOpb5MscyKIuqCYaz-YaC6Hz5tcRYGiDcEnJtTipajDQ&amp;response_format=JSON&amp;league_id=sammyfbl&amp;timeframe=all&gt;</code></pre>
 </div>
 <div id="historical-rosters" class="section level4">
 <h4>Historical Rosters</h4>
 <p>The Historical Rosters is a combination of Historical Auction
 Results, and the Keepers work above.</p>
 <p>Here are the old owners:</p>
-<pre><code>## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/league/history/teams?version=3.0&amp;access_token=U2FsdGVkX19T4PTeF6zY3dkU6uWgqr8vwaHfbqGKKFGlWRl-SKxGqmJHTzbv3ocZeYUEUCJS82B5VygPO44FAHRVgZYuZ47aXDUWKeKun6c&amp;response_format=JSON&amp;league_id=sammyfbl&amp;timeframe=all&gt;</code></pre>
+<pre><code>## Data from: &lt;https://sammyfbl.baseball.cbssports.com/api/league/history/teams?version=3.0&amp;access_token=U2FsdGVkX1_Wp1EjlnKjkv2hkMVupneewlVqCFFq9its0sFly4-uTrQTOh2Ydd_DOpb5MscyKIuqCYaz-YaC6Hz5tcRYGiDcEnJtTipajDQ&amp;response_format=JSON&amp;league_id=sammyfbl&amp;timeframe=all&gt;</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["season"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cbs_team_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["max"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["above_30"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["above_40"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2024","2":"Biloxi Blackjacks","3":"16","4":"0","5":"0"},{"1":"2023","2":"Biloxi Blackjacks","3":"45","4":"3","5":"2"},{"1":"2022","2":"Biloxi Blackjacks","3":"46","4":"4","5":"2"},{"1":"2021","2":"Biloxi Blackjacks","3":"46","4":"4","5":"1"},{"1":"2020","2":"Biloxi Blackjacks","3":"42","4":"3","5":"2"},{"1":"2019","2":"Biloxi Blackjacks","3":"43","4":"2","5":"1"},{"1":"2018","2":"Biloxi Blackjacks","3":"41","4":"3","5":"1"},{"1":"2017","2":"Biloxi Blackjacks","3":"35","4":"2","5":"0"},{"1":"2016","2":"Biloxi Blackjacks","3":"32","4":"1","5":"0"},{"1":"2015","2":"Biloxi Blackjacks","3":"34","4":"3","5":"0"},{"1":"2014","2":"Biloxi Blackjacks","3":"35","4":"4","5":"0"},{"1":"2013","2":"Biloxi Blackjacks","3":"30","4":"1","5":"0"},{"1":"2012","2":"Biloxi Blackjacks","3":"48","4":"3","5":"1"},{"1":"2024","2":"Blackstone Valley Voodoo","3":"19","4":"0","5":"0"},{"1":"2023","2":"Blackstone Valley Voodoo","3":"14","4":"0","5":"0"},{"1":"2024","2":"Brooklyn Kings","3":"42","4":"1","5":"1"},{"1":"2023","2":"Brooklyn Kings","3":"48","4":"2","5":"1"},{"1":"2022","2":"Brooklyn Kings","3":"43","4":"3","5":"2"},{"1":"2021","2":"Brooklyn Kings","3":"38","4":"2","5":"0"},{"1":"2020","2":"Brooklyn Kings","3":"33","4":"1","5":"0"},{"1":"2019","2":"Brooklyn Kings","3":"40","4":"2","5":"1"},{"1":"2018","2":"Brooklyn Kings","3":"35","4":"1","5":"0"},{"1":"2017","2":"Brooklyn Kings","3":"48","4":"1","5":"1"},{"1":"2016","2":"Brooklyn Kings","3":"43","4":"2","5":"1"},{"1":"2015","2":"Brooklyn Kings","3":"46","4":"2","5":"1"},{"1":"2014","2":"Brooklyn Kings","3":"44","4":"3","5":"1"},{"1":"2013","2":"Brooklyn Kings","3":"37","4":"1","5":"0"},{"1":"2012","2":"Brooklyn Kings","3":"25","4":"0","5":"0"},{"1":"2024","2":"Charleston Chews","3":"48","4":"3","5":"3"},{"1":"2023","2":"Charleston Chews","3":"43","4":"2","5":"2"},{"1":"2022","2":"Charleston Chews","3":"38","4":"3","5":"0"},{"1":"2021","2":"Charleston Chews","3":"52","4":"3","5":"2"},{"1":"2020","2":"Charleston Chews","3":"47","4":"2","5":"1"},{"1":"2019","2":"Charleston Chews","3":"38","4":"4","5":"0"},{"1":"2018","2":"Charleston Chews","3":"40","4":"2","5":"1"},{"1":"2017","2":"Charleston Chews","3":"46","4":"2","5":"2"},{"1":"2016","2":"Charleston Chews","3":"39","4":"3","5":"0"},{"1":"2015","2":"Charleston Chews","3":"40","4":"2","5":"1"},{"1":"2014","2":"Charleston Chews","3":"40","4":"2","5":"1"},{"1":"2013","2":"Charleston Chews","3":"25","4":"0","5":"0"},{"1":"2012","2":"Charleston Chews","3":"28","4":"0","5":"0"},{"1":"2015","2":"Dayton Dragons","3":"23","4":"0","5":"0"},{"1":"2014","2":"Dayton Dragons","3":"36","4":"1","5":"0"},{"1":"2024","2":"Delray Bad Hombres","3":"23","4":"0","5":"0"},{"1":"2023","2":"Delray Bad Hombres","3":"32","4":"1","5":"0"},{"1":"2022","2":"Delray Bad Hombres","3":"32","4":"1","5":"0"},{"1":"2021","2":"Delray Bad Hombres","3":"20","4":"0","5":"0"},{"1":"2020","2":"Delray Bad Hombres","3":"40","4":"2","5":"1"},{"1":"2019","2":"Delray Bad Hombres","3":"35","4":"1","5":"0"},{"1":"2018","2":"Delray Bad Hombres","3":"44","4":"2","5":"1"},{"1":"2017","2":"Delray Bad Hombres","3":"35","4":"1","5":"0"},{"1":"2016","2":"Delray Bad Hombres","3":"13","4":"0","5":"0"},{"1":"2015","2":"Delray Bad Hombres","3":"32","4":"1","5":"0"},{"1":"2014","2":"Delray Bad Hombres","3":"15","4":"0","5":"0"},{"1":"2016","2":"Delray Rockets","3":"48","4":"1","5":"1"},{"1":"2015","2":"Delray Rockets","3":"33","4":"1","5":"0"},{"1":"2014","2":"Delray Rockets","3":"31","4":"1","5":"0"},{"1":"2024","2":"Empire State Legends","3":"51","4":"2","5":"2"},{"1":"2023","2":"Empire State Legends","3":"46","4":"2","5":"2"},{"1":"2022","2":"Empire State Legends","3":"45","4":"3","5":"1"},{"1":"2021","2":"Empire State Legends","3":"52","4":"2","5":"1"},{"1":"2020","2":"Empire State Legends","3":"45","4":"3","5":"1"},{"1":"2019","2":"Empire State Legends","3":"50","4":"3","5":"3"},{"1":"2018","2":"Empire State Legends","3":"45","4":"4","5":"3"},{"1":"2017","2":"Empire State Legends","3":"50","4":"3","5":"2"},{"1":"2016","2":"Empire State Legends","3":"51","4":"3","5":"1"},{"1":"2015","2":"Empire State Legends","3":"51","4":"2","5":"1"},{"1":"2014","2":"Empire State Legends","3":"53","4":"2","5":"1"},{"1":"2013","2":"Empire State Legends","3":"48","4":"4","5":"2"},{"1":"2012","2":"Empire State Legends","3":"47","4":"2","5":"2"},{"1":"2023","2":"Evanston Snowy Egrets","3":"17","4":"0","5":"0"},{"1":"2022","2":"Evanston Snowy Egrets","3":"57","4":"2","5":"2"},{"1":"2021","2":"Evanston Snowy Egrets","3":"50","4":"1","5":"1"},{"1":"2020","2":"Evanston Snowy Egrets","3":"45","4":"2","5":"1"},{"1":"2019","2":"Evanston Snowy Egrets","3":"63","4":"3","5":"3"},{"1":"2018","2":"Evanston Snowy Egrets","3":"58","4":"2","5":"2"},{"1":"2017","2":"Evanston Snowy Egrets","3":"55","4":"2","5":"2"},{"1":"2016","2":"Evanston Snowy Egrets","3":"52","4":"4","5":"3"},{"1":"2015","2":"Evanston Snowy Egrets","3":"35","4":"1","5":"0"},{"1":"2014","2":"Evanston Snowy Egrets","3":"45","4":"3","5":"1"},{"1":"2013","2":"Evanston Snowy Egrets","3":"30","4":"1","5":"0"},{"1":"2012","2":"Evanston Snowy Egrets","3":"38","4":"2","5":"0"},{"1":"2024","2":"Flatiron Furbies","3":"40","4":"2","5":"1"},{"1":"2023","2":"Flatiron Furbies","3":"41","4":"2","5":"1"},{"1":"2022","2":"Flatiron Furbies","3":"40","4":"3","5":"1"},{"1":"2021","2":"Flatiron Furbies","3":"43","4":"2","5":"1"},{"1":"2020","2":"Flatiron Furbies","3":"38","4":"2","5":"0"},{"1":"2019","2":"Flatiron Furbies","3":"46","4":"2","5":"1"},{"1":"2018","2":"Flatiron Furbies","3":"46","4":"3","5":"1"},{"1":"2017","2":"Flatiron Furbies","3":"47","4":"2","5":"1"},{"1":"2016","2":"Flatiron Furbies","3":"33","4":"2","5":"0"},{"1":"2015","2":"Flatiron Furbies","3":"52","4":"2","5":"2"},{"1":"2014","2":"Flatiron Furbies","3":"45","4":"1","5":"1"},{"1":"2013","2":"Flatiron Furbies","3":"48","4":"2","5":"1"},{"1":"2012","2":"Flatiron Furbies","3":"37","4":"1","5":"0"},{"1":"2012","2":"Gotham Protectors","3":"27","4":"0","5":"0"},{"1":"2024","2":"Havana Halibut","3":"34","4":"1","5":"0"},{"1":"2023","2":"Havana Halibut","3":"49","4":"3","5":"1"},{"1":"2022","2":"Havana Halibut","3":"48","4":"2","5":"1"},{"1":"2021","2":"Havana Halibut","3":"42","4":"2","5":"1"},{"1":"2020","2":"Havana Halibut","3":"61","4":"2","5":"2"},{"1":"2019","2":"Havana Halibut","3":"43","4":"3","5":"1"},{"1":"2018","2":"Havana Halibut","3":"40","4":"2","5":"1"},{"1":"2017","2":"Havana Halibut","3":"42","4":"3","5":"2"},{"1":"2016","2":"Havana Halibut","3":"53","4":"2","5":"1"},{"1":"2015","2":"Havana Halibut","3":"56","4":"2","5":"1"},{"1":"2014","2":"Havana Halibut","3":"32","4":"3","5":"0"},{"1":"2013","2":"Havana Halibut","3":"38","4":"2","5":"0"},{"1":"2013","2":"Hoboken Hoodrats","3":"34","4":"1","5":"0"},{"1":"2024","2":"Jersey Diamond Pimps","3":"42","4":"2","5":"1"},{"1":"2023","2":"Jersey Diamond Pimps","3":"42","4":"3","5":"1"},{"1":"2022","2":"Jersey Diamond Pimps","3":"40","4":"3","5":"1"},{"1":"2021","2":"Jersey Diamond Pimps","3":"34","4":"1","5":"0"},{"1":"2020","2":"Jersey Diamond Pimps","3":"29","4":"0","5":"0"},{"1":"2019","2":"Jersey Diamond Pimps","3":"51","4":"2","5":"1"},{"1":"2018","2":"Jersey Diamond Pimps","3":"49","4":"4","5":"3"},{"1":"2017","2":"Jersey Diamond Pimps","3":"26","4":"0","5":"0"},{"1":"2016","2":"Jersey Diamond Pimps","3":"49","4":"2","5":"1"},{"1":"2015","2":"Jersey Diamond Pimps","3":"45","4":"2","5":"2"},{"1":"2014","2":"Jersey Diamond Pimps","3":"40","4":"4","5":"1"},{"1":"2013","2":"Jersey Diamond Pimps","3":"41","4":"4","5":"1"},{"1":"2012","2":"Jersey Diamond Pimps","3":"25","4":"0","5":"0"},{"1":"2013","2":"New Rochelle Rockets","3":"42","4":"2","5":"2"},{"1":"2012","2":"New Rochelle Rockets","3":"46","4":"1","5":"1"},{"1":"2015","2":"New York Ham Porters","3":"27","4":"0","5":"0"},{"1":"2014","2":"New York Ham Porters","3":"49","4":"1","5":"1"},{"1":"2013","2":"New York Ham Porters","3":"34","4":"1","5":"0"},{"1":"2012","2":"New York Ham Porters","3":"51","4":"1","5":"1"},{"1":"2021","2":"New York Jedi","3":"36","4":"2","5":"0"},{"1":"2020","2":"New York Jedi","3":"33","4":"2","5":"0"},{"1":"2019","2":"New York Jedi","3":"44","4":"3","5":"2"},{"1":"2018","2":"New York Jedi","3":"44","4":"3","5":"1"},{"1":"2017","2":"New York Jedi","3":"39","4":"1","5":"0"},{"1":"2016","2":"New York Jedi","3":"34","4":"2","5":"0"},{"1":"2015","2":"New York Jedi","3":"26","4":"0","5":"0"},{"1":"2014","2":"New York Jedi","3":"33","4":"1","5":"0"},{"1":"2024","2":"Pensacola Orcas","3":"31","4":"1","5":"0"},{"1":"2023","2":"Pensacola Orcas","3":"36","4":"2","5":"0"},{"1":"2022","2":"Pensacola Orcas","3":"31","4":"2","5":"0"},{"1":"2021","2":"Pensacola Orcas","3":"43","4":"1","5":"1"},{"1":"2020","2":"Pensacola Orcas","3":"45","4":"2","5":"1"},{"1":"2019","2":"Pensacola Orcas","3":"32","4":"1","5":"0"},{"1":"2018","2":"Pensacola Orcas","3":"28","4":"0","5":"0"},{"1":"2017","2":"Pensacola Orcas","3":"25","4":"0","5":"0"},{"1":"2016","2":"Pensacola Orcas","3":"31","4":"2","5":"0"},{"1":"2015","2":"Pensacola Orcas","3":"22","4":"0","5":"0"},{"1":"2014","2":"Pensacola Orcas","3":"16","4":"0","5":"0"},{"1":"2012","2":"Savannah Thrashers","3":"42","4":"1","5":"1"},{"1":"2024","2":"South Carolina Buzz","3":"26","4":"0","5":"0"},{"1":"2023","2":"South Carolina Buzz","3":"36","4":"1","5":"0"},{"1":"2022","2":"South Carolina Buzz","3":"42","4":"1","5":"1"},{"1":"2021","2":"South Carolina Buzz","3":"31","4":"1","5":"0"},{"1":"2020","2":"South Carolina Buzz","3":"44","4":"2","5":"2"},{"1":"2019","2":"South Carolina Buzz","3":"37","4":"2","5":"0"},{"1":"2018","2":"South Carolina Buzz","3":"38","4":"3","5":"0"},{"1":"2017","2":"South Carolina Buzz","3":"30","4":"1","5":"0"},{"1":"2016","2":"South Carolina Buzz","3":"33","4":"1","5":"0"},{"1":"2015","2":"South Carolina Buzz","3":"35","4":"1","5":"0"},{"1":"2014","2":"South Carolina Buzz","3":"30","4":"2","5":"0"},{"1":"2013","2":"South Carolina Buzz","3":"28","4":"0","5":"0"},{"1":"2012","2":"South Carolina Buzz","3":"30","4":"1","5":"0"},{"1":"2024","2":"Suffern Bombers","3":"47","4":"1","5":"1"},{"1":"2023","2":"Suffern Bombers","3":"42","4":"1","5":"1"},{"1":"2022","2":"Suffern Bombers","3":"38","4":"2","5":"0"},{"1":"2021","2":"Suffern Bombers","3":"46","4":"1","5":"1"},{"1":"2020","2":"Suffern Bombers","3":"50","4":"2","5":"2"},{"1":"2019","2":"Suffern Bombers","3":"45","4":"2","5":"1"},{"1":"2018","2":"Suffern Bombers","3":"45","4":"2","5":"1"},{"1":"2017","2":"Suffern Bombers","3":"36","4":"1","5":"0"},{"1":"2016","2":"Suffern Bombers","3":"27","4":"0","5":"0"},{"1":"2015","2":"Suffern Bombers","3":"31","4":"2","5":"0"},{"1":"2014","2":"Suffern Bombers","3":"31","4":"1","5":"0"},{"1":"2013","2":"Suffern Bombers","3":"26","4":"0","5":"0"},{"1":"2012","2":"Suffern Bombers","3":"23","4":"0","5":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1811,20 +1811,20 @@ Results, and the Keepers work above.</p>
 trending updwards these last few years, culminating with the highest
 split ever towards batting last year. We will price with a 61% batting
 split this year.</p>
-<div id="btdtvhgweb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#btdtvhgweb table {
+<div id="qdfwnrfdxm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qdfwnrfdxm table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#btdtvhgweb thead, #btdtvhgweb tbody, #btdtvhgweb tfoot, #btdtvhgweb tr, #btdtvhgweb td, #btdtvhgweb th {
+#qdfwnrfdxm thead, #qdfwnrfdxm tbody, #qdfwnrfdxm tfoot, #qdfwnrfdxm tr, #qdfwnrfdxm td, #qdfwnrfdxm th {
 border-style: none;
 }
-#btdtvhgweb p {
+#qdfwnrfdxm p {
 margin: 0;
 padding: 0;
 }
-#btdtvhgweb .gt_table {
+#qdfwnrfdxm .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -1849,11 +1849,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#btdtvhgweb .gt_caption {
+#qdfwnrfdxm .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#btdtvhgweb .gt_title {
+#qdfwnrfdxm .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -1864,7 +1864,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#btdtvhgweb .gt_subtitle {
+#qdfwnrfdxm .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -1875,7 +1875,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#btdtvhgweb .gt_heading {
+#qdfwnrfdxm .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -1886,12 +1886,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#btdtvhgweb .gt_bottom_border {
+#qdfwnrfdxm .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#btdtvhgweb .gt_col_headings {
+#qdfwnrfdxm .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -1905,7 +1905,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#btdtvhgweb .gt_col_heading {
+#qdfwnrfdxm .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -1924,7 +1924,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#btdtvhgweb .gt_column_spanner_outer {
+#qdfwnrfdxm .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -1935,13 +1935,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#btdtvhgweb .gt_column_spanner_outer:first-child {
+#qdfwnrfdxm .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#btdtvhgweb .gt_column_spanner_outer:last-child {
+#qdfwnrfdxm .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#btdtvhgweb .gt_column_spanner {
+#qdfwnrfdxm .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -1952,10 +1952,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#btdtvhgweb .gt_spanner_row {
+#qdfwnrfdxm .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#btdtvhgweb .gt_group_heading {
+#qdfwnrfdxm .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -1980,7 +1980,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#btdtvhgweb .gt_empty_group_heading {
+#qdfwnrfdxm .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -1994,13 +1994,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#btdtvhgweb .gt_from_md > :first-child {
+#qdfwnrfdxm .gt_from_md > :first-child {
 margin-top: 0;
 }
-#btdtvhgweb .gt_from_md > :last-child {
+#qdfwnrfdxm .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#btdtvhgweb .gt_row {
+#qdfwnrfdxm .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2018,7 +2018,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#btdtvhgweb .gt_stub {
+#qdfwnrfdxm .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2030,7 +2030,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#btdtvhgweb .gt_stub_row_group {
+#qdfwnrfdxm .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2043,13 +2043,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#btdtvhgweb .gt_row_group_first td {
+#qdfwnrfdxm .gt_row_group_first td {
 border-top-width: 2px;
 }
-#btdtvhgweb .gt_row_group_first th {
+#qdfwnrfdxm .gt_row_group_first th {
 border-top-width: 2px;
 }
-#btdtvhgweb .gt_summary_row {
+#qdfwnrfdxm .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2058,14 +2058,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#btdtvhgweb .gt_first_summary_row {
+#qdfwnrfdxm .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#btdtvhgweb .gt_first_summary_row.thick {
+#qdfwnrfdxm .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#btdtvhgweb .gt_last_summary_row {
+#qdfwnrfdxm .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2074,7 +2074,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#btdtvhgweb .gt_grand_summary_row {
+#qdfwnrfdxm .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2083,7 +2083,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#btdtvhgweb .gt_first_grand_summary_row {
+#qdfwnrfdxm .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2092,7 +2092,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#btdtvhgweb .gt_last_grand_summary_row_top {
+#qdfwnrfdxm .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2101,10 +2101,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#btdtvhgweb .gt_striped {
+#qdfwnrfdxm .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#btdtvhgweb .gt_table_body {
+#qdfwnrfdxm .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2112,7 +2112,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#btdtvhgweb .gt_footnotes {
+#qdfwnrfdxm .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2125,7 +2125,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#btdtvhgweb .gt_footnote {
+#qdfwnrfdxm .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2133,7 +2133,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#btdtvhgweb .gt_sourcenotes {
+#qdfwnrfdxm .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2146,57 +2146,57 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#btdtvhgweb .gt_sourcenote {
+#qdfwnrfdxm .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#btdtvhgweb .gt_left {
+#qdfwnrfdxm .gt_left {
 text-align: left;
 }
-#btdtvhgweb .gt_center {
+#qdfwnrfdxm .gt_center {
 text-align: center;
 }
-#btdtvhgweb .gt_right {
+#qdfwnrfdxm .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#btdtvhgweb .gt_font_normal {
+#qdfwnrfdxm .gt_font_normal {
 font-weight: normal;
 }
-#btdtvhgweb .gt_font_bold {
+#qdfwnrfdxm .gt_font_bold {
 font-weight: bold;
 }
-#btdtvhgweb .gt_font_italic {
+#qdfwnrfdxm .gt_font_italic {
 font-style: italic;
 }
-#btdtvhgweb .gt_super {
+#qdfwnrfdxm .gt_super {
 font-size: 65%;
 }
-#btdtvhgweb .gt_footnote_marks {
+#qdfwnrfdxm .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#btdtvhgweb .gt_asterisk {
+#qdfwnrfdxm .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#btdtvhgweb .gt_indent_1 {
+#qdfwnrfdxm .gt_indent_1 {
 text-indent: 5px;
 }
-#btdtvhgweb .gt_indent_2 {
+#qdfwnrfdxm .gt_indent_2 {
 text-indent: 10px;
 }
-#btdtvhgweb .gt_indent_3 {
+#qdfwnrfdxm .gt_indent_3 {
 text-indent: 15px;
 }
-#btdtvhgweb .gt_indent_4 {
+#qdfwnrfdxm .gt_indent_4 {
 text-indent: 20px;
 }
-#btdtvhgweb .gt_indent_5 {
+#qdfwnrfdxm .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -2243,20 +2243,20 @@ last five years. As you can see, there is nothing meaninful to be
 gleaned here. Every owner is pretty unpredictable each year. Some teams
 like the Buzz, and Furbies almost never spend less than 60% on
 Batting.</p>
-<div id="ljzawkbybz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ljzawkbybz table {
+<div id="cqlznrkqyr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cqlznrkqyr table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#ljzawkbybz thead, #ljzawkbybz tbody, #ljzawkbybz tfoot, #ljzawkbybz tr, #ljzawkbybz td, #ljzawkbybz th {
+#cqlznrkqyr thead, #cqlznrkqyr tbody, #cqlznrkqyr tfoot, #cqlznrkqyr tr, #cqlznrkqyr td, #cqlznrkqyr th {
 border-style: none;
 }
-#ljzawkbybz p {
+#cqlznrkqyr p {
 margin: 0;
 padding: 0;
 }
-#ljzawkbybz .gt_table {
+#cqlznrkqyr .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2281,11 +2281,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ljzawkbybz .gt_caption {
+#cqlznrkqyr .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ljzawkbybz .gt_title {
+#cqlznrkqyr .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2296,7 +2296,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ljzawkbybz .gt_subtitle {
+#cqlznrkqyr .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2307,7 +2307,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ljzawkbybz .gt_heading {
+#cqlznrkqyr .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2318,12 +2318,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ljzawkbybz .gt_bottom_border {
+#cqlznrkqyr .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ljzawkbybz .gt_col_headings {
+#cqlznrkqyr .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2337,7 +2337,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ljzawkbybz .gt_col_heading {
+#cqlznrkqyr .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2356,7 +2356,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ljzawkbybz .gt_column_spanner_outer {
+#cqlznrkqyr .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2367,13 +2367,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ljzawkbybz .gt_column_spanner_outer:first-child {
+#cqlznrkqyr .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ljzawkbybz .gt_column_spanner_outer:last-child {
+#cqlznrkqyr .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ljzawkbybz .gt_column_spanner {
+#cqlznrkqyr .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2384,10 +2384,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ljzawkbybz .gt_spanner_row {
+#cqlznrkqyr .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#ljzawkbybz .gt_group_heading {
+#cqlznrkqyr .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2412,7 +2412,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ljzawkbybz .gt_empty_group_heading {
+#cqlznrkqyr .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2426,13 +2426,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ljzawkbybz .gt_from_md > :first-child {
+#cqlznrkqyr .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ljzawkbybz .gt_from_md > :last-child {
+#cqlznrkqyr .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ljzawkbybz .gt_row {
+#cqlznrkqyr .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2450,7 +2450,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ljzawkbybz .gt_stub {
+#cqlznrkqyr .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2462,7 +2462,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ljzawkbybz .gt_stub_row_group {
+#cqlznrkqyr .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2475,13 +2475,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ljzawkbybz .gt_row_group_first td {
+#cqlznrkqyr .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ljzawkbybz .gt_row_group_first th {
+#cqlznrkqyr .gt_row_group_first th {
 border-top-width: 2px;
 }
-#ljzawkbybz .gt_summary_row {
+#cqlznrkqyr .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2490,14 +2490,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ljzawkbybz .gt_first_summary_row {
+#cqlznrkqyr .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ljzawkbybz .gt_first_summary_row.thick {
+#cqlznrkqyr .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ljzawkbybz .gt_last_summary_row {
+#cqlznrkqyr .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2506,7 +2506,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ljzawkbybz .gt_grand_summary_row {
+#cqlznrkqyr .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2515,7 +2515,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ljzawkbybz .gt_first_grand_summary_row {
+#cqlznrkqyr .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2524,7 +2524,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ljzawkbybz .gt_last_grand_summary_row_top {
+#cqlznrkqyr .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2533,10 +2533,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#ljzawkbybz .gt_striped {
+#cqlznrkqyr .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ljzawkbybz .gt_table_body {
+#cqlznrkqyr .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2544,7 +2544,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ljzawkbybz .gt_footnotes {
+#cqlznrkqyr .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2557,7 +2557,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ljzawkbybz .gt_footnote {
+#cqlznrkqyr .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2565,7 +2565,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ljzawkbybz .gt_sourcenotes {
+#cqlznrkqyr .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2578,57 +2578,57 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ljzawkbybz .gt_sourcenote {
+#cqlznrkqyr .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ljzawkbybz .gt_left {
+#cqlznrkqyr .gt_left {
 text-align: left;
 }
-#ljzawkbybz .gt_center {
+#cqlznrkqyr .gt_center {
 text-align: center;
 }
-#ljzawkbybz .gt_right {
+#cqlznrkqyr .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ljzawkbybz .gt_font_normal {
+#cqlznrkqyr .gt_font_normal {
 font-weight: normal;
 }
-#ljzawkbybz .gt_font_bold {
+#cqlznrkqyr .gt_font_bold {
 font-weight: bold;
 }
-#ljzawkbybz .gt_font_italic {
+#cqlznrkqyr .gt_font_italic {
 font-style: italic;
 }
-#ljzawkbybz .gt_super {
+#cqlznrkqyr .gt_super {
 font-size: 65%;
 }
-#ljzawkbybz .gt_footnote_marks {
+#cqlznrkqyr .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#ljzawkbybz .gt_asterisk {
+#cqlznrkqyr .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ljzawkbybz .gt_indent_1 {
+#cqlznrkqyr .gt_indent_1 {
 text-indent: 5px;
 }
-#ljzawkbybz .gt_indent_2 {
+#cqlznrkqyr .gt_indent_2 {
 text-indent: 10px;
 }
-#ljzawkbybz .gt_indent_3 {
+#cqlznrkqyr .gt_indent_3 {
 text-indent: 15px;
 }
-#ljzawkbybz .gt_indent_4 {
+#cqlznrkqyr .gt_indent_4 {
 text-indent: 20px;
 }
-#ljzawkbybz .gt_indent_5 {
+#cqlznrkqyr .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -2753,27 +2753,27 @@ text-indent: 25px;
 ## Getting thebat Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=thebat&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
 ## Getting thebatx Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=thebatx&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
 ## Getting fangraphsdc Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=fangraphsdc&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
-## Getting steamer Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=steamer&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
-## Getting 2023 Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=2023&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
+## Getting steamer Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=steamer&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0</code></pre>
+<pre><code>## Getting 2023 Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=2023&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
 ## Getting 2022 Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=2022&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0
 ## Getting 2021 Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=2021&amp;split=61&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0</code></pre>
 <p>Let’s compare a few player values at different batter pitcher splits
 since our league split increased so much last year.</p>
 <pre><code>## Getting steamer Auction Calculator data.  Scraping data from: https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&amp;lg=MLB&amp;dollars=270&amp;mb=1&amp;mp=20&amp;msp=5&amp;mrp=5&amp;type=bat&amp;players=&amp;proj=steamer&amp;split=64&amp;points=c|1,2,3,4,5|0,14,2,3,4&amp;rep=0&amp;drp=0&amp;pp=C,SS,2B,3B,OF,1B&amp;pos=1,1,1,1,4,1,0,0,0,2,6,3,0,5,0&amp;sort=&amp;view=0</code></pre>
-<div id="jdygjzmrzx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jdygjzmrzx table {
+<div id="gicpjkjphw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gicpjkjphw table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#jdygjzmrzx thead, #jdygjzmrzx tbody, #jdygjzmrzx tfoot, #jdygjzmrzx tr, #jdygjzmrzx td, #jdygjzmrzx th {
+#gicpjkjphw thead, #gicpjkjphw tbody, #gicpjkjphw tfoot, #gicpjkjphw tr, #gicpjkjphw td, #gicpjkjphw th {
 border-style: none;
 }
-#jdygjzmrzx p {
+#gicpjkjphw p {
 margin: 0;
 padding: 0;
 }
-#jdygjzmrzx .gt_table {
+#gicpjkjphw .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2798,11 +2798,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_caption {
+#gicpjkjphw .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#jdygjzmrzx .gt_title {
+#gicpjkjphw .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2813,7 +2813,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#jdygjzmrzx .gt_subtitle {
+#gicpjkjphw .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2824,7 +2824,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#jdygjzmrzx .gt_heading {
+#gicpjkjphw .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2835,12 +2835,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_bottom_border {
+#gicpjkjphw .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_col_headings {
+#gicpjkjphw .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2854,7 +2854,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_col_heading {
+#gicpjkjphw .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2873,7 +2873,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#jdygjzmrzx .gt_column_spanner_outer {
+#gicpjkjphw .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2884,13 +2884,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#jdygjzmrzx .gt_column_spanner_outer:first-child {
+#gicpjkjphw .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#jdygjzmrzx .gt_column_spanner_outer:last-child {
+#gicpjkjphw .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#jdygjzmrzx .gt_column_spanner {
+#gicpjkjphw .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2901,10 +2901,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#jdygjzmrzx .gt_spanner_row {
+#gicpjkjphw .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#jdygjzmrzx .gt_group_heading {
+#gicpjkjphw .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2929,7 +2929,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#jdygjzmrzx .gt_empty_group_heading {
+#gicpjkjphw .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2943,13 +2943,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#jdygjzmrzx .gt_from_md > :first-child {
+#gicpjkjphw .gt_from_md > :first-child {
 margin-top: 0;
 }
-#jdygjzmrzx .gt_from_md > :last-child {
+#gicpjkjphw .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#jdygjzmrzx .gt_row {
+#gicpjkjphw .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2967,7 +2967,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#jdygjzmrzx .gt_stub {
+#gicpjkjphw .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2979,7 +2979,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#jdygjzmrzx .gt_stub_row_group {
+#gicpjkjphw .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2992,13 +2992,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#jdygjzmrzx .gt_row_group_first td {
+#gicpjkjphw .gt_row_group_first td {
 border-top-width: 2px;
 }
-#jdygjzmrzx .gt_row_group_first th {
+#gicpjkjphw .gt_row_group_first th {
 border-top-width: 2px;
 }
-#jdygjzmrzx .gt_summary_row {
+#gicpjkjphw .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3007,14 +3007,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#jdygjzmrzx .gt_first_summary_row {
+#gicpjkjphw .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_first_summary_row.thick {
+#gicpjkjphw .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#jdygjzmrzx .gt_last_summary_row {
+#gicpjkjphw .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3023,7 +3023,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_grand_summary_row {
+#gicpjkjphw .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3032,7 +3032,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#jdygjzmrzx .gt_first_grand_summary_row {
+#gicpjkjphw .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3041,7 +3041,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_last_grand_summary_row_top {
+#gicpjkjphw .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3050,10 +3050,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_striped {
+#gicpjkjphw .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#jdygjzmrzx .gt_table_body {
+#gicpjkjphw .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3061,7 +3061,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_footnotes {
+#gicpjkjphw .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3074,7 +3074,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_footnote {
+#gicpjkjphw .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3082,7 +3082,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#jdygjzmrzx .gt_sourcenotes {
+#gicpjkjphw .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3095,57 +3095,57 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#jdygjzmrzx .gt_sourcenote {
+#gicpjkjphw .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#jdygjzmrzx .gt_left {
+#gicpjkjphw .gt_left {
 text-align: left;
 }
-#jdygjzmrzx .gt_center {
+#gicpjkjphw .gt_center {
 text-align: center;
 }
-#jdygjzmrzx .gt_right {
+#gicpjkjphw .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#jdygjzmrzx .gt_font_normal {
+#gicpjkjphw .gt_font_normal {
 font-weight: normal;
 }
-#jdygjzmrzx .gt_font_bold {
+#gicpjkjphw .gt_font_bold {
 font-weight: bold;
 }
-#jdygjzmrzx .gt_font_italic {
+#gicpjkjphw .gt_font_italic {
 font-style: italic;
 }
-#jdygjzmrzx .gt_super {
+#gicpjkjphw .gt_super {
 font-size: 65%;
 }
-#jdygjzmrzx .gt_footnote_marks {
+#gicpjkjphw .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#jdygjzmrzx .gt_asterisk {
+#gicpjkjphw .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#jdygjzmrzx .gt_indent_1 {
+#gicpjkjphw .gt_indent_1 {
 text-indent: 5px;
 }
-#jdygjzmrzx .gt_indent_2 {
+#gicpjkjphw .gt_indent_2 {
 text-indent: 10px;
 }
-#jdygjzmrzx .gt_indent_3 {
+#gicpjkjphw .gt_indent_3 {
 text-indent: 15px;
 }
-#jdygjzmrzx .gt_indent_4 {
+#gicpjkjphw .gt_indent_4 {
 text-indent: 20px;
 }
-#jdygjzmrzx .gt_indent_5 {
+#gicpjkjphw .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -3165,46 +3165,46 @@ text-indent: 25px;
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="projection_source" class="gt_row gt_left">THE BAT</td>
+    <tr><td headers="projection_source" class="gt_row gt_left">ATC</td>
 <td headers="player_name" class="gt_row gt_left">Corbin Carroll</td>
 <td headers="team" class="gt_row gt_left">ARI</td>
 <td headers="pos" class="gt_row gt_left">OF</td>
-<td headers="ADP" class="gt_row gt_right">5.99</td>
-<td headers="PA" class="gt_row gt_right">630.894</td>
-<td headers="dollars_61" class="gt_row gt_right">34.16427</td>
-<td headers="dollars_64" class="gt_row gt_right">36.71136</td>
-<td headers="rank" class="gt_row gt_right">100</td>
-<td headers="dollar_diff" class="gt_row gt_right">2.547093</td></tr>
-    <tr><td headers="projection_source" class="gt_row gt_left">2022 YTD</td>
-<td headers="player_name" class="gt_row gt_left">Aaron Judge</td>
-<td headers="team" class="gt_row gt_left">NYY</td>
-<td headers="pos" class="gt_row gt_left">OF/DH</td>
-<td headers="ADP" class="gt_row gt_right">11.74</td>
-<td headers="PA" class="gt_row gt_right">696.000</td>
-<td headers="dollars_61" class="gt_row gt_right">78.68173</td>
-<td headers="dollars_64" class="gt_row gt_right">52.03915</td>
-<td headers="rank" class="gt_row gt_right">1</td>
-<td headers="dollar_diff" class="gt_row gt_right">-26.642576</td></tr>
-    <tr><td headers="projection_source" class="gt_row gt_left">2022 YTD</td>
-<td headers="player_name" class="gt_row gt_left">Pete Alonso</td>
-<td headers="team" class="gt_row gt_left">NYM</td>
-<td headers="pos" class="gt_row gt_left">1B/DH</td>
-<td headers="ADP" class="gt_row gt_right">26.99</td>
-<td headers="PA" class="gt_row gt_right">685.000</td>
-<td headers="dollars_61" class="gt_row gt_right">40.64103</td>
-<td headers="dollars_64" class="gt_row gt_right">32.42496</td>
+<td headers="ADP" class="gt_row gt_right">6.00</td>
+<td headers="PA" class="gt_row gt_right">630.630</td>
+<td headers="dollars_61" class="gt_row gt_right">37.66886</td>
+<td headers="dollars_64" class="gt_row gt_right">36.67910</td>
 <td headers="rank" class="gt_row gt_right">50</td>
-<td headers="dollar_diff" class="gt_row gt_right">-8.216076</td></tr>
-    <tr><td headers="projection_source" class="gt_row gt_left">2021 YTD</td>
-<td headers="player_name" class="gt_row gt_left">Vladimir Guerrero Jr.</td>
-<td headers="team" class="gt_row gt_left">TOR</td>
-<td headers="pos" class="gt_row gt_left">1B/DH</td>
-<td headers="ADP" class="gt_row gt_right">29.49</td>
-<td headers="PA" class="gt_row gt_right">698.000</td>
-<td headers="dollars_61" class="gt_row gt_right">45.84585</td>
-<td headers="dollars_64" class="gt_row gt_right">33.04245</td>
+<td headers="dollar_diff" class="gt_row gt_right">-0.9897578</td></tr>
+    <tr><td headers="projection_source" class="gt_row gt_left">THE BAT</td>
+<td headers="player_name" class="gt_row gt_left">Fernando Tatis Jr.</td>
+<td headers="team" class="gt_row gt_left">SDP</td>
+<td headers="pos" class="gt_row gt_left">OF</td>
+<td headers="ADP" class="gt_row gt_right">8.17</td>
+<td headers="PA" class="gt_row gt_right">646.629</td>
+<td headers="dollars_61" class="gt_row gt_right">42.49791</td>
+<td headers="dollars_64" class="gt_row gt_right">41.88516</td>
 <td headers="rank" class="gt_row gt_right">25</td>
-<td headers="dollar_diff" class="gt_row gt_right">-12.803400</td></tr>
+<td headers="dollar_diff" class="gt_row gt_right">-0.6127497</td></tr>
+    <tr><td headers="projection_source" class="gt_row gt_left">Depth Charts</td>
+<td headers="player_name" class="gt_row gt_left">Ronald Acuna Jr.</td>
+<td headers="team" class="gt_row gt_left">ATL</td>
+<td headers="pos" class="gt_row gt_left">OF</td>
+<td headers="ADP" class="gt_row gt_right">1.01</td>
+<td headers="PA" class="gt_row gt_right">679.000</td>
+<td headers="dollars_61" class="gt_row gt_right">73.95069</td>
+<td headers="dollars_64" class="gt_row gt_right">72.43146</td>
+<td headers="rank" class="gt_row gt_right">1</td>
+<td headers="dollar_diff" class="gt_row gt_right">-1.5192322</td></tr>
+    <tr><td headers="projection_source" class="gt_row gt_left">Steamer</td>
+<td headers="player_name" class="gt_row gt_left">Mike Trout</td>
+<td headers="team" class="gt_row gt_left">LAA</td>
+<td headers="pos" class="gt_row gt_left">OF</td>
+<td headers="ADP" class="gt_row gt_right">69.69</td>
+<td headers="PA" class="gt_row gt_right">648.358</td>
+<td headers="dollars_61" class="gt_row gt_right">28.40695</td>
+<td headers="dollars_64" class="gt_row gt_right">29.75483</td>
+<td headers="rank" class="gt_row gt_right">100</td>
+<td headers="dollar_diff" class="gt_row gt_right">1.3478829</td></tr>
   </tbody>
   
   
@@ -3228,7 +3228,7 @@ the top of the draft board.</strong></p>
 <!-- ``` -->
 <div id="eno-sarris-pitching-ranks" class="section level2">
 <h2>Eno Sarris Pitching Ranks</h2>
-<p>Taken from: <a href="https://theathletic.com/3136219/2022/03/18/sarris-starting-pitching-ranks-for-the-2022-fantasy-season" class="uri">https://theathletic.com/3136219/2022/03/18/sarris-starting-pitching-ranks-for-the-2022-fantasy-season</a></p>
+<p>Taken from: <a href="https://theathletic.com/5311380/2024/03/05/eno-sarris-updated-starting-pitcher-fantasy-rankings/" class="uri">https://theathletic.com/5311380/2024/03/05/eno-sarris-updated-starting-pitcher-fantasy-rankings/</a></p>
 <ul>
 <li>Manually copy the table</li>
 </ul>

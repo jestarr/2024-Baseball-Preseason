@@ -157,7 +157,7 @@ cbs_teams <- cbsapi::cbs_teams(league_id = "sammyfbl")
 My `baseballstarR` package also has a function below that gets the API result and returns the player table
 
 ```{r}
-
+mlb_players <- starrbaseball::mlb_playerids
 cbs_players <- cbsapi::cbs_player_search()
 
 ```
@@ -290,7 +290,8 @@ auction_results <- cbsapi::cbs_historical_draft_results(league_id = "sammyfbl", 
 The Historical Rosters is a combination of Historical Auction Results, and the Keepers work above.
 
 ```{r}
-historical_rosters <- bind_rows(keepers, auction_results)
+historical_rosters <- bind_rows(keepers, auction_results) |> 
+  filter(season != 2024)
 
 rm(auction_results)
 rm(keepers)
@@ -315,6 +316,22 @@ historical_rosters |>
   summarize(max = max(salary), above_30 = sum(above_30), above_40 = sum(above_40)) |> 
   arrange(cbs_team_name, desc(season)) 
 ```
+
+# Historical Standings
+```{r}
+cbs_historical_champions(league_id = "sammyfbl") |> 
+  gt()
+
+historical_standings <- cbs_historical_standings()
+
+standings_spread <- historical_standings |> 
+  dplyr::select(season, cbs_team_name, stat_type, value) |> 
+  tidyr::pivot_wider(
+                     names_from = stat_type,
+                     values_from = value)
+```
+
+
 
 # Historical Auction Analysis
 
@@ -524,6 +541,12 @@ bat_calc_compare_join |>
 
 As you can see, the top players get pushed up a few dollars, and the lower ranked players have roughly the same value. **Takeaway: Be willing to deviate from values a few dollars if needed. Especially at the top of the draft board.**
 
+Looking at some of the players that will be part of my decision tree
+```{r}
+bat_auction_calc_summary |> 
+  filter(player_name %in% c("Alex Bregman", "Vladimir Guerrero Jr.", "Marcus Semien", "Austin Riley", "Triston Casas", "Manny Machado", "Jose Ramirez", "Bo Bichette"))
+```
+
 <!-- ## Projections Data -->
 
 <!-- ```{r} -->
@@ -550,6 +573,29 @@ As you can see, the top players get pushed up a few dollars, and the lower ranke
 
 ## Eno Sarris Pitching Ranks
 
-Taken from: <https://theathletic.com/3136219/2022/03/18/sarris-starting-pitching-ranks-for-the-2022-fantasy-season>
+Taken from: <https://theathletic.com/5311380/2024/03/05/eno-sarris-updated-starting-pitcher-fantasy-rankings/>
 
 -   Manually copy the table
+
+```{r}
+eno_sp_ranks <- readr::read_csv(here::here("data-raw", "2024_eno-sarris-pitching-ranks.csv"))
+```
+
+# Position Analysis
+
+## Relievers
+```{r}
+historical_rosters |> 
+  mutate(above_20 = ifelse(salary >= 20, 1,0),
+         above_15 = ifelse(salary >= 15, 1, 0),
+         above_10 = ifelse(salary >= 10, 1, 0)) |> 
+  filter((season >= 2021 & primary_position == "RP")) |> 
+  group_by(season) |> 
+  summarize(avg_salary = mean(salary),
+            max_salary = max(salary),
+            above_20 = sum(above_20),
+            above_15 = sum(above_15),
+            above_10 = sum(above_10)
+            )
+```
+
