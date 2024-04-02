@@ -41,6 +41,7 @@ library(ggplot2)
 library(bbplot)
 library(forcats)
 library(trelliscopejs)
+library(DT)
 
 # 538 GT Theme taken from https://themockup.blog/static/gt-cookbook-advanced.html#FiveThirtyEight_Theme
 gt_theme_538 <- function(data,...) {
@@ -240,7 +241,7 @@ keepers <- cbsapi::cbs_keepers(league_id = params$league_name, season = params$c
 
 # manually remove players who were dropped post keeper deadline but pre-auction
 keepers <- keepers |> 
-  filter(!cbs_player_name %in% c("Jasson Dominguez", "Kyle Bradish", "Devin Williams")) |> 
+  filter(!cbs_player_name %in% c("Jasson Dominguez", "Kyle Bradish", "Devin Williams", "Lucas Giolito", "Sonny Gray")) |> 
   select(-cbs_team_id)
 
 saveRDS(keepers, here::here("data", glue::glue("{params$current_season}_keepers({params$league_name}).rds")))
@@ -318,6 +319,7 @@ historical_rosters |>
 ```
 
 # Historical Standings
+
 ```{r}
 cbs_historical_champions(league_id = "sammyfbl") |> 
   gt()
@@ -330,8 +332,6 @@ standings_spread <- historical_standings |>
                      names_from = stat_type,
                      values_from = value)
 ```
-
-
 
 # Historical Auction Analysis
 
@@ -407,9 +407,16 @@ owner_spending %>%
 
 # Projections
 
+```{r}
+source(here::here("R", "functions.R"))
+mlb_cbs <- get_cbs_mlb_players()
+```
+
+
 ## Fangraphs Projections
 
 ## Batting Projections
+
 ```{r}
 bat_proj <- fg_projections(projection_source = c("atc", "thebat", "thebatx", "fangraphsdc", "steamer", "zips",
     "zipsdc"),
@@ -542,10 +549,54 @@ bat_calc_compare_join |>
 As you can see, the top players get pushed up a few dollars, and the lower ranked players have roughly the same value. **Takeaway: Be willing to deviate from values a few dollars if needed. Especially at the top of the draft board.**
 
 Looking at some of the players that will be part of my decision tree
+
 ```{r}
 bat_auction_calc_summary |> 
   filter(player_name %in% c("Alex Bregman", "Vladimir Guerrero Jr.", "Marcus Semien", "Austin Riley", "Triston Casas", "Manny Machado", "Jose Ramirez", "Bo Bichette"))
 ```
+
+
+```{r}
+
+pit_auction_calc <- fg_auction_calculator(teams = 12,
+  budget = 270,
+  stats_type = "pit",
+  projection_source = c("atc", "thebat", "zips", "fangraphsdc", "steamer"),
+  bat_split = 61,
+  rest_of_season = FALSE
+)
+
+pit_prior_ytd <- fg_auction_calculator(teams = 12,
+  budget = 270,
+  stats_type = "pit",
+  projection_source = c("2023", "2022", "2021"),
+  bat_split = 61,
+  rest_of_season = FALSE
+) |> 
+  select(projection_source, playerid, player_name, dollars) |> 
+  pivot_wider(names_from = projection_source,
+              values_from = dollars) |> 
+  janitor::clean_names()
+
+pit_auction_calc_summary <- fg_auction_calculator_summary(pit_auction_calc) |> 
+  left_join(pit_prior_ytd)
+
+pit_proj_capsule <- pitch_proj_short |> 
+  left_join(pit_auction_calc |> select(projection_source,
+                                       fangraphs_id = playerid,
+                                       ADP,
+                                       dollars)) |> 
+  relocate(ADP, .before = IP) |> 
+  group_by(projection_source) |> 
+  mutate(dollars_rank = rank(-dollars),
+         adp_rank = rank(ADP),
+         diff = adp_rank - dollars_rank) |> 
+  ungroup()
+```
+
+Let's compare a fe
+
+
 
 <!-- ## Projections Data -->
 
@@ -571,19 +622,134 @@ bat_auction_calc_summary |>
 
 <!-- ``` -->
 
-## Eno Sarris Pitching Ranks
 
-Taken from: <https://theathletic.com/5311380/2024/03/05/eno-sarris-updated-starting-pitcher-fantasy-rankings/>
-
--   Manually copy the table
-
-```{r}
-eno_sp_ranks <- readr::read_csv(here::here("data-raw", "2024_eno-sarris-pitching-ranks.csv"))
-```
 
 # Position Analysis
 
+
+```{r}
+fg_pit <- starrbaseball::fg_leaderboards(stats = "pit", 
+                                         season = "2023",
+                                         season1 = "2022",
+                                         split_seasons = "1")
+
+fg_pit_short <- fg_pit |> 
+  mutate(across(ends_with("_id"), as.character)) |> 
+  select(season = Season, 
+         name,
+         mlb_id,
+         IP,
+         `K%`,
+         ERA,
+         WHIP,
+         SV,
+         HLD) |> 
+  mutate(SOLDS = SV + HLD)
+```
+
+## Starting Pitchers
+
+###  Eno Sarris Pitching Ranks
+
+Taken from: <https://theathletic.com/5311380/2024/03/05/eno-sarris-updated-starting-pitcher-fantasy-rankings/>
+
+
+```{r}
+eno_sp_ranks <- readr::read_csv(here::here("data-raw", "2024_eno-sarris-pitching-ranks.csv")) |> 
+  mutate(mlb_id = as.character(mlb_id))
+```
+
+```{r}
+
+sp_pitching <- left_join(eno_sp_ranks, mlb_cbs %>% select(mlb_id, name, cbs_team_name, contract_year, salary, birthdate, fangraphs_stats_url, savant_stats_url, headshot_url)) |> 
+  mutate(age = lubridate::as.period(lubridate::interval(start = birthdate, end = lubridate::today()))$year)
+
+
+sp_pitching <- sp_pitching |> 
+  select(mlb_id, eno_rank, name, age, injury_risk,cbs_team_name, everything())
+
+
+datatable <- sp_pitching %>% 
+  select(-one_of(c("player_name", "blurb"))) |> 
+  select(eno_rank,
+         name,
+         age,
+         injury_risk,
+         cbs_team_name,
+         dollars,
+         ends_with("_plus"))
+
+
+datatable(datatable, class = 'cell-border stripe', filter = 'top', 
+          options = list(pageLength = 100, autoWidth = TRUE,
+                         columnDefs = list(list(className = 'dt-center', targets = 0:6))))
+
+```
+
+
 ## Relievers
+
+Who were the top 3 finishers in SOLD's, and how much did they spend on RP in the auction?
+
+```{r}
+rp_spend_by_team <- historical_rosters |> 
+  filter((primary_position == "RP" & season >=2022)) |> 
+  group_by(season, cbs_team_name) |> 
+  summarize(salary = sum(salary), count = n()) |> 
+  left_join(historical_standings |> filter((season >=2022 & stat_type == "S+HD"))) |> 
+  arrange(desc(season), desc(value)) |> 
+  select(season,
+         cbs_team_name,
+         salary,
+         count,
+         value,
+         stat_rank)
+
+rp_spend_by_team |> gt()
+
+```
+
+-   BVV were an auto-draft team when Evanston quit mid-auction. Their auction results are not legit
+
+-   Havana doesn't spend on relievers.
+
+```{r}
+rp_by_team <- historical_rosters |> 
+  filter((primary_position == "RP" & season >=2022)) |>
+  arrange(desc(season), cbs_team_name) |> 
+  dplyr::left_join(mlb_players |> select(mlb_id, cbs_id, fangraphs_id)) |> 
+    select(season,
+         draft_type,
+         cbs_team_name,
+         cbs_player_name,
+         salary,
+         contract_year,
+         ends_with("id")) |> 
+  left_join(fg_pit_short)
+```
+
+How many SOLDS were acquired at auction?
+```{r}
+rp_by_team_totals <- rp_by_team |> 
+  group_by(season, cbs_team_name) |> 
+  summarize(SV = sum(SV),
+            SOLDS = sum(SOLDS)) |> 
+  left_join(rp_spend_by_team)
+```
+
+Most Expensive relievers bought?
+```{r}
+rp_by_team |> 
+  group_by(season) |> 
+  mutate(cost_rank = rank(-salary)) |> 
+  arrange(desc(season), desc(salary)) |> 
+  filter(cost_rank < 5) |> 
+  gt()
+```
+
+
+
+
 ```{r}
 historical_rosters |> 
   mutate(above_20 = ifelse(salary >= 20, 1,0),
@@ -597,5 +763,35 @@ historical_rosters |>
             above_15 = sum(above_15),
             above_10 = sum(above_10)
             )
+```
+
+
+### Prospects
+```{r}
+# get fangraphs current season rosters
+fg_rosters <- starrbaseball::fg_rosters() |>
+  dplyr::mutate(PlayerId = ifelse(is.na(playerid), minormasterid, playerid)) |>
+  dplyr::select(PlayerId, mlbamid) |>
+  dplyr::distinct()
+
+# -- Include Top Prospects from Fangraphs if they are not already in Historical List --
+# get fangraphs top prospects
+prospects23 <- fg_prospects(season = "2023", updated = FALSE) |>
+  dplyr::filter(!is.na(PlayerId)) |>
+  dplyr::arrange(LastName) |>
+  dplyr::select(season = Season, playerName, fangraphs_id = PlayerId, contains("rank"), position = Position, cETA, cFV, risk) |> 
+  dplyr::left_join(mlb_players |> select(cbs_id, mlb_id, fangraphs_id)) |> 
+  arrange(rank) |> 
+  left_join(historical_rosters |> select(season, cbs_id, salary, contract_year, draft_type))
+
+
+```
+
+```{r}
+top_prospects <- fg_prospects(updated = FALSE) |>
+  dplyr::filter(!is.na(PlayerId)) |>
+  dplyr::arrange(rank) |>
+  dplyr::select(season = Season, playerName, fangraphs_id = PlayerId, contains("rank"), position = Position, cETA, cFV, risk) |> 
+  dplyr::left_join(mlb_cbs |> select(cbs_id, mlb_id, fangraphs_id, cbs_team_name))
 ```
 

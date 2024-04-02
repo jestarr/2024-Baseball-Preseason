@@ -1,0 +1,330 @@
+---
+title: "2024 Sammy Baseball Post Auction Review"
+author: "Jonathan Starr"
+date: '`r paste("First created on Mar 26, 2024. Updated on", Sys.Date())`'
+output:
+  html_document:
+    highlight: tango
+    self_contained: yes
+    theme: journal
+    toc: true
+    toc_depth: 4
+    df_print: paged
+  pdf_document:
+    toc: yes
+  word_document:
+    toc: yes
+params:
+  current_season: 2024
+  num_teams: 12
+  league_name: "sammyfbl"
+  keepers_final: TRUE
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Packages and Functions
+
+```{r libraries, message = FALSE, warning = FALSE}
+library(starrbaseball)
+library(cbsapi)
+library(tidyverse)
+library(gt)
+
+
+# 538 GT Theme taken from https://themockup.blog/static/gt-cookbook-advanced.html#FiveThirtyEight_Theme
+gt_theme_538 <- function(data,...) {
+  data %>%
+    opt_all_caps()  %>%
+    opt_table_font(
+      font = list(
+        google_font("Chivo"),
+        default_fonts()
+      )
+    ) %>%
+    fmt_percent(columns = contains("pct"), decimals = 0) %>% 
+    tab_style(
+      style = cell_borders(
+        sides = "bottom", color = "transparent", weight = px(2)
+      ),
+      locations = cells_body(
+        columns = everything(),
+        # This is a relatively sneaky way of changing the bottom border
+        # Regardless of data size
+        rows = nrow(data$`_data`)
+      )
+    )  %>% 
+    tab_options(
+      column_labels.background.color = "white",
+      table.border.top.width = px(3),
+      table.border.top.color = "transparent",
+      table.border.bottom.color = "transparent",
+      table.border.bottom.width = px(3),
+      column_labels.border.top.width = px(3),
+      column_labels.border.top.color = "transparent",
+      column_labels.border.bottom.width = px(3),
+      column_labels.border.bottom.color = "black",
+      data_row.padding = px(3),
+      source_notes.font.size = 12,
+      table.font.size = 16,
+      heading.align = "left",
+      ...
+    ) 
+}
+
+
+```
+
+In this vignette, I'll walk through a review of the auction results + keepers (i.e. post-auction rosters) to look into specific themes, or trends coming out of the auction.  
+# MLB/CBS Player Table
+```{r}
+source(here::here("R", "functions.R"))
+mlb_players <- mlb_playerids
+```
+
+# Fangraphs Projections
+```{r}
+bat_proj <- readRDS(here::here("data", "projections", "2024_combined_fg_hitting_projections.rds"))
+pit_proj <- readRDS(here::here("data", "projections", "2024_combined_fg_pitching_projections.rds"))
+```
+
+
+# Draft Results
+
+First let's get the CBS auction results.  This will either load the results (if already saved), or scrape them if note.  
+```{r}
+if (file.exists(here::here("data", glue::glue("{params$current_season}_auction_results({params$league_name}).rds"))) == F) {
+auction_results <- cbs_draft_results(bidding_history = FALSE)
+
+saveRDS(auction_results, here::here("data", glue::glue("{params$current_season}_auction_results({params$league_name}).rds")))
+
+} else {
+auction_results <- readRDS(here::here("data", glue::glue("{params$current_season}_auction_results({params$league_name}).rds")))
+}
+
+```
+
+Then we can get the auction results with bidding history.
+```{r}
+if (file.exists(here::here("data", glue::glue("{params$current_season}_auction_results({params$league_name}).rds"))) == F) {
+auction_results_bids <- cbs_draft_results(bidding_history = TRUE)
+
+saveRDS(auction_results_bids, here::here("data", glue::glue("{params$current_season}_auction_results-w-bids({params$league_name}).rds")))
+
+} else {
+auction_results_bids <- readRDS(here::here("data", glue::glue("{params$current_season}_auction_results-w-bids({params$league_name}).rds")))
+}
+
+```
+
+
+# Auction + Keepers
+
+```{r}
+keepers <- readRDS(here::here("data", glue::glue("{params$current_season}_keepers({params$league_name}).rds")))
+
+full_rosters <- bind_rows(auction_results, keepers)
+
+# use GS as a proxy for who are relievers to fix CBS position coding
+relievers <- pit_proj |> 
+  filter(projection_source == "THE BAT" & GS < 5) |> 
+  select(fangraphs_id) |> 
+  left_join(mlb_players |> select(fangraphs_id, mlb_id, cbs_id))
+
+reliever_ids <- relievers |> 
+  pull(cbs_id)
+
+
+# fix relievers in cbs rosters
+full_rosters <- full_rosters |> 
+  mutate(primary_position = case_when(
+    cbs_id %in% reliever_ids & primary_position =="RP" ~ "RP",
+    !cbs_id %in% reliever_ids & primary_position =="RP" ~ "SP",
+    TRUE ~ primary_position
+  )) |> 
+  left_join(mlb_players |> select(cbs_id, fangraphs_id, cbs_id))
+
+```
+
+# League Spending
+
+## Hitter Pitcher Split
+```{r}
+league_spending <- full_rosters %>%
+  summarize(
+    spending_total = sum(salary),
+    batting_total = sum(ifelse(!primary_position %in% c("SP", "RP"), salary, 0)),
+    pitching_total = spending_total - batting_total,
+    batting_pct = batting_total / spending_total,
+    pitching_pct = pitching_total / spending_total,
+    batting_avg = batting_total / params$num_teams,
+    pitching_avg = pitching_total / params$num_teams
+  ) %>%
+  ungroup() %>%
+  select(batting_pct, pitching_pct)
+
+# gt table showing batting, pitching splits for last 5 years
+league_spending %>% 
+  gt() %>% 
+  tab_header(
+    title = "Hitter-Pitcher Auction Split"
+  ) %>% 
+  cols_label(
+    batting_pct = "Hitting %",
+    pitching_pct = "Pitching %"
+  )  |> 
+  fmt_percent(columns = matches("_pct"), decimals = 0)
+
+
+full_rosters %>%
+  group_by(cbs_team_name) %>%
+  summarize(
+    spending_total = sum(salary),
+    batting_total = sum(ifelse(!primary_position %in% c("SP", "RP"), salary, 0)),
+    pitching_total = spending_total - batting_total,
+    relief_total = sum(ifelse(primary_position == "RP", salary, 0)),
+    batting_pct = batting_total / spending_total,
+    pitching_pct = pitching_total / spending_total,
+    relief_pct = relief_total / spending_total
+  ) |> 
+  ungroup() |> 
+  select(cbs_team_name, batting_pct, pitching_pct, relief_total) |> 
+  gt() |> 
+  tab_header(
+    title = "Owner  Spending"
+  ) %>%
+  fmt_percent(columns = ends_with("pct"), decimals = 0)
+```
+
+# Hitters
+```{r}
+bat_auction_calc <- fg_auction_calculator(teams = 12,
+  budget = 270,
+  stats_type = "bat",
+  projection_source = c("atc", "thebatx", "steamer"),
+  bat_split = 64,
+  rest_of_season = FALSE
+)
+
+bat_auction_calc_test <- bat_auction_calc |> left_join(mlb_players, join_by(playerid == fangraphs_id)) |> 
+  left_join(full_rosters, join_by(cbs_id))|> 
+  select(draft_type, projection_source, cbs_team_name, player_name, dollars, salary) |> 
+  mutate(diff = dollars - salary) |> 
+  filter(draft_type == "auction" & dollars > 0) |> 
+  arrange(desc(diff))
+```
+
+
+
+# Prospects
+
+How much did prospects go for?
+```{r}
+top_prospects <- fg_prospects(season = "2024", updated = FALSE) |>
+  dplyr::filter(!is.na(PlayerId)) |>
+  dplyr::arrange(rank) |>
+  dplyr::select(season = Season, playerName, fangraphs_id = PlayerId, contains("rank"), position = Position, cETA, cFV, risk)
+  
+```
+
+
+# Standings
+```{r}
+cbs_rosters <- cbs_rosters()
+
+# filter to only active players
+cbs_rosters_active <- cbs_rosters |> 
+  filter(roster_status == "A") |> 
+  mutate(roster_group = ifelse(eligible_position == "P", "Pitchers", "Batters"))
+
+cbs_rosters_active <- cbs_rosters_active |> 
+  select(cbs_team_name, cbs_logo_url, cbs_id, name, position, eligible_position, roster_group)
+
+# join other ids 
+cbs_rosters_active <- cbs_rosters_active |> 
+  left_join(mlb_players |> select(mlb_id, cbs_id, fangraphs_id))
+
+
+  
+  
+  
+
+
+```
+
+## Batters
+```{r}
+cbs_batters <- cbs_rosters_active |> 
+  filter(roster_group == "Batters") |> 
+  left_join(bat_proj |> select(projection_source, fangraphs_id, H, BB, HBP, AB, SF, PA, R, HR, RBI, SB))
+
+
+cbs_batters_team_totals <- cbs_batters |> 
+  group_by(projection_source, cbs_team_name) |> 
+  summarise(across(c("H", "BB", "HBP", "AB", "SF", "PA", "R", "HR", "RBI", "SB"), ~ sum(.x))) |> 
+  mutate(OBP = (H + BB + HBP) / (AB + BB + HBP + SF)
+           ) |> 
+  select(projection_source, cbs_team_name, PA, AB, R, HR, RBI, SB, OBP) |> 
+  ungroup() |> 
+  mutate(across(c(PA, AB, R, HR, RBI, SB), round),
+         OBP = round(OBP, 3)) |> 
+  group_by(projection_source) |> 
+  mutate(across(c(R, HR, RBI, SB, OBP), rank, .names = "{.col}_points"),
+         bat_points = R_points + HR_points + RBI_points + SB_points + OBP_points,
+         bat_rank = rank(-bat_points))
+```
+
+## Pitchers
+```{r}
+cbs_pitchers <- cbs_rosters_active |> 
+  filter(roster_group == "Pitchers") |> 
+  left_join(pit_proj |> select(projection_source, fangraphs_id, IP, H, BB, W, ER, SO, SV, HLD))
+
+
+cbs_pitchers_team_totals <- cbs_pitchers |> 
+  group_by(projection_source, cbs_team_name) |> 
+  summarise(across(c(IP, H, BB, W, ER, SO, SV, HLD), ~ sum(.x))) |> 
+  mutate(ERA = (ER * 9) / IP,
+         WHIP = (BB + H) / IP,
+         SOLDS = SV + HLD
+           ) |> 
+  select(projection_source, cbs_team_name, IP, W, SO, SOLDS, ERA, WHIP) |> 
+  ungroup() |> 
+  mutate(across(c(W, SO, SOLDS), round),
+         across(c(ERA, WHIP),  ~ round(., 2))) |> 
+  group_by(projection_source) |> 
+  mutate(across(c(W, SO, SOLDS), rank, .names = "{.col}_points"),
+         across(c(ERA, WHIP), ~rank(-.x), .names = "{.col}_points"),
+         pitch_points = W_points + SO_points + SOLDS_points + ERA_points + WHIP_points,
+         pitch_rank = rank(-pitch_points))
+```
+
+## Overall Team Ranks
+```{r}
+team_ranks <- left_join(cbs_batters_team_totals, cbs_pitchers_team_totals) |> 
+  # The Bat X doesn't project pitching
+  filter(projection_source != "THE BAT X") |> 
+  select(projection_source, cbs_team_name, bat_points, pitch_points) |> 
+  mutate(total_points = bat_points + pitch_points,
+         rank = rank(-total_points)) |> 
+  arrange(cbs_team_name)
+
+team_ranks_wide <- team_ranks |> 
+  select(projection_source, cbs_team_name, rank) |> 
+  pivot_wider(names_from = projection_source,
+              values_from = rank
+              ) |> 
+  rowwise() |> 
+  mutate(avg_rank = mean(c(ATC, `Depth Charts`, Steamer, `THE BAT`, ZiPS, `ZiPS DC`)),
+         avg_rank = round(avg_rank, 1))
+
+team_ranks_wide |> 
+  gt()
+```
+

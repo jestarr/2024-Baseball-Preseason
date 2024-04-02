@@ -47,7 +47,7 @@ saveRDS(bat_proj, here::here("data", "projections",   paste0("2024_combined_fg_h
 
 # ---- pitching projections ----
 # write raw files for each projection set
-pit_proj <- starrbaseball::fg_projections(projection_source = c("atc", "thebat", "thebatx", "fangraphsdc", "steamer", "zips", "zipsdc"),
+pit_proj <- starrbaseball::fg_projections(projection_source = c("atc", "thebat", "fangraphsdc", "steamer", "zips", "zipsdc"),
                                           stats_type = "pit",
                                           season_type = "pre") 
 
